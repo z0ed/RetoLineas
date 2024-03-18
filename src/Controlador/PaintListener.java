@@ -3,9 +3,7 @@ package Controlador;
 import Modelo.Linea;
 import Modelo.Modelo;
 import Vista.Vista;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener; 
+import java.awt.event.MouseEvent; 
 
 public class PaintListener {
 

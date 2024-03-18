@@ -28,9 +28,10 @@ DrawArea drawArea;
         JButton redoButton = new JButton("redo");
 
         buttonPanel.add(redoButton);
-        buttonPanel.add(undoButton);
+        redoButton.addActionListener(e -> Modelo.addLine());
 
-         undoButton.addActionListener(e -> Modelo.addLine());
+        buttonPanel.add(undoButton);
+        undoButton.addActionListener(e -> Modelo.removeLine());
 
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
