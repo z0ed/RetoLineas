@@ -1,6 +1,9 @@
 package Vista;
 
 import javax.swing.*;
+
+import Modelo.Modelo;
+
 import java.awt.*;
 
 public class Vista {
@@ -27,14 +30,11 @@ DrawArea drawArea;
         buttonPanel.add(redoButton);
         buttonPanel.add(undoButton);
 
+         undoButton.addActionListener(e -> Modelo.addLine());
+
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         frame.setVisible(true);
-
-
-
-    
-
     }
 
     public class DrawArea extends JPanel {
