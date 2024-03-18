@@ -1,5 +1,6 @@
-import javax.swing.*;
+package Vista;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Vista {
