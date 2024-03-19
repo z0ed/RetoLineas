@@ -1,47 +1,70 @@
 package Vista;
 
 import javax.swing.*;
-
+import Modelo.Linea;
 import Modelo.Modelo;
-
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Vista {
+public class Vista extends JPanel {
+    private JFrame frame;
+    private JButton redoButton;
+    private JButton undoButton;
+    private JPanel drawingPanel;
+    private Modelo model;
 
-JFrame frame;
+    public Vista(Modelo model) {
+        this.model = model;
+        initialize();
+    }
 
-DrawArea drawArea;
-
-
-    public Vista(){
-
-        frame = new JFrame("Reto Semanal");
-        frame.setSize(800,600);
+    private void initialize() {
+        frame = new JFrame("Line Drawer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        
-        drawArea= new DrawArea();
-        frame.add(drawArea, BorderLayout.CENTER);
+        frame.setSize(400, 400);
+
+        redoButton = new JButton("Redo");
+        undoButton = new JButton("Undo");
+
+        redoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.redo();
+                drawingPanel.repaint();
+            }
+        });
+
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.undo();
+                drawingPanel.repaint();
+            }
+        });
+
+        drawingPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                Linea currentLinea = model.getCurrentLinea();
+                if (currentLinea != null) {
+                    g2d.drawLine(currentLinea.getX1(), currentLinea.getY1(),
+                                 currentLinea.getX2(), currentLinea.getY2());
+                }
+                System.out.println("linea"+currentLinea);
+            }
+        };
+
+        frame.setLayout(new BorderLayout());
+        frame.add(drawingPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
-        JButton undoButton = new JButton("Undo");
-        JButton redoButton = new JButton("redo");
-
-        buttonPanel.add(redoButton);
-        redoButton.addActionListener(e -> Modelo.addLine());
-
         buttonPanel.add(undoButton);
-        undoButton.addActionListener(e -> Modelo.removeLine());
-
+        buttonPanel.add(redoButton);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         frame.setVisible(true);
     }
-
-    public class DrawArea extends JPanel {
-
-    
-        
-    }
-
 }

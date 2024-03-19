@@ -1,19 +1,18 @@
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
+import Controlador.PaintListener;
+import Modelo.Modelo;
+import Modelo.Linea;
 import Vista.Vista;
-
-import java.awt.Panel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Modelo model = new Modelo();
+        Vista view = new Vista(model);
+        PaintListener controller = new PaintListener(model, view);
 
-     new Vista();
-    
+        // Agregar una línea inicial
+        Linea lineaInicial = new Linea(50, 50, 200, 200);
+        controller.addLinea(lineaInicial);
     }
 }

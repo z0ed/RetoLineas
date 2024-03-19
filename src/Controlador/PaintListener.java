@@ -3,27 +3,30 @@ package Controlador;
 import Modelo.Linea;
 import Modelo.Modelo;
 import Vista.Vista;
-import java.awt.event.MouseEvent; 
 
 public class PaintListener {
+    private Modelo model;
+    private Vista view;
 
-    private Linea linea;
-    private Vista vista;
-    private Modelo modelo;
-
-    public PaintListener(Modelo modelo, Vista vista) {
-        this.modelo = modelo;
-        this.vista = vista;
+    public PaintListener(Modelo model, Vista view) {
+        this.model = model;
+        this.view = view;
     }
 
-    public void MouseFirstClick(MouseEvent e){
-        linea.setX1(e.getX());
-        linea.setY1(e.getY());
+    public void addLinea(Linea linea) {
+        model.addLinea(linea);
+        view.repaint();
+        System.out.println("dibuje la linea controlador");
+
     }
 
-    public void MouseSecondClick(MouseEvent e){
-        linea.setX2(e.getX());
-        linea.setY2(e.getY());
+    public void undo() {
+        model.undo();
+        view.repaint();
     }
 
+    public void redo() {
+        model.redo();
+        view.repaint();
+    }
 }
