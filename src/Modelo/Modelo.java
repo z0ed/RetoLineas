@@ -5,34 +5,32 @@ import java.util.List;
 
 public class Modelo {
     private List<Linea> lineas;
-    private int currentIndex;
+    private List<Linea> lineasBorradas;
 
     public Modelo() {
         lineas = new ArrayList<>();
-        currentIndex = -1;
+        lineasBorradas = new ArrayList<>();
     }
 
-    public void addLinea(Linea linea) {
+    public void agregarLinea(Linea linea) {
         lineas.add(linea);
-        currentIndex++;
     }
 
-    public void undo() {
-        if (currentIndex >= 0) {
-            currentIndex--;
+    public List<Linea> getLineas() {
+        return lineas;
+    }
+
+    public void borrarUltimaLinea() {
+        if (!lineas.isEmpty()) {
+            Linea ultimaLinea = lineas.remove(lineas.size() - 1);
+            lineasBorradas.add(ultimaLinea);
         }
     }
 
     public void redo() {
-        if (currentIndex < lineas.size() - 1) {
-            currentIndex++;
+        if (!lineasBorradas.isEmpty()) {
+            Linea ultimaLineaBorrada = lineasBorradas.remove(lineasBorradas.size() - 1);
+            lineas.add(ultimaLineaBorrada);
         }
-    }
-
-    public Linea getCurrentLinea() {
-        if (currentIndex >= 0 && currentIndex < lineas.size()) {
-            return lineas.get(currentIndex);
-        }
-        return null;
     }
 }
